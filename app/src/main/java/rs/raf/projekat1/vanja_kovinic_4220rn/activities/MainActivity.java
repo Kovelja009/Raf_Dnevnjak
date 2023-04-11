@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.widget.Button;
@@ -22,6 +23,10 @@ import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.SplashViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private SplashViewModel splashViewModel;
+
+    public static final String PREF_USERNAME = "username";
+    public static final String PREF_PASSWORD = "password";
+    public static final String PREF_EMAIL = "email";
 
     private TextInputEditText emailInput;
     private TextInputEditText usernameInput;
@@ -46,8 +51,28 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+
+
+        check_login();
+
         setContentView(R.layout.activity_main);
         init();
+    }
+
+    private void check_login(){
+        SharedPreferences sharedPref = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        if (sharedPref.contains(PREF_USERNAME) && sharedPref.contains(PREF_PASSWORD) && sharedPref.contains(PREF_EMAIL)){
+            String email = sharedPref.getString(PREF_EMAIL, "");
+            String username = sharedPref.getString(PREF_USERNAME, "");
+            String password = sharedPref.getString(PREF_PASSWORD, "");
+
+            Intent intent = new Intent(this, CalendarMenuActivity.class);
+            intent.putExtra(CalendarMenuActivity.EMAIL_STRING, email.toString());
+            intent.putExtra(CalendarMenuActivity.PASSWORD_STRING, password.toString());
+            intent.putExtra(CalendarMenuActivity.USERNAME_STRING, username.toString());
+            finish();
+            startActivity(intent);
+        }
     }
 
     private void init() {
@@ -153,14 +178,24 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(CalendarMenuActivity.USERNAME_STRING, username.toString());
             // Ukoliko bismo ovde pozvali finish() activity bi bio uklonjen sa activity backstack-a
             // pre nego sto bi na njega bio push-ovan SecondActivity
+
+            shared_pref(email.toString(), username.toString(), password.toString());
+
             finish();
             startActivity(intent);
 
-
-//            if (email.equals("admin") && username.equals("admin") && password.equals("admin")) {
-//                Intent intent = new Intent(this, HomeActivity.class);
-//                startActivity(intent);
-//            }
         });
+    }
+
+    private void shared_pref(String email, String username, String password){
+        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        sharedPreferences
+                .edit()
+                .putString(PREF_EMAIL, email)
+                .putString(PREF_USERNAME, username)
+                .putString(PREF_PASSWORD, password)
+                .apply();
+
+        Toast.makeText(this, "Message written to preferences", Toast.LENGTH_SHORT).show();
     }
 }
