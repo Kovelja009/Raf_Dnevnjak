@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Raf_Dnevnjak</string>
+    <string name="username">username</string>
+    <string name="email">email</string>
+    <string name="email_missing">email missing</string>
+    <string name="username_missing">username missing</string>
+    <string name="password">password</string>
+    <string name="password_missing">password missing</string>
+    <string name="Login">login</string>
+</resources>
