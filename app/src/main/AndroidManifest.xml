@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Raf_Dnevnjak"
         tools:targetApi="31">
-        <activity android:name=".activities.CalendarMenuActivity"></activity>
+        <activity android:name=".activities.BottomNavigationActivity"></activity>
         <activity
             android:name=".activities.MainActivity"
             android:exported="true"

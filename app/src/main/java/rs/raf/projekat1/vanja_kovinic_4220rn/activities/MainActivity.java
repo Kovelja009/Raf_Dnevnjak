@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
@@ -66,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
             String username = sharedPref.getString(PREF_USERNAME, "");
             String password = sharedPref.getString(PREF_PASSWORD, "");
 
-            Intent intent = new Intent(this, CalendarMenuActivity.class);
-            intent.putExtra(CalendarMenuActivity.EMAIL_STRING, email.toString());
-            intent.putExtra(CalendarMenuActivity.PASSWORD_STRING, password.toString());
-            intent.putExtra(CalendarMenuActivity.USERNAME_STRING, username.toString());
+            Intent intent = new Intent(this, BottomNavigationActivity.class);
+            intent.putExtra(BottomNavigationActivity.EMAIL_STRING, email.toString());
+            intent.putExtra(BottomNavigationActivity.PASSWORD_STRING, password.toString());
+            intent.putExtra(BottomNavigationActivity.USERNAME_STRING, username.toString());
             finish();
             startActivity(intent);
         }
@@ -172,10 +171,10 @@ public class MainActivity extends AppCompatActivity {
 //            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
 //            toast.show();
 
-            Intent intent = new Intent(this, CalendarMenuActivity.class);
-            intent.putExtra(CalendarMenuActivity.EMAIL_STRING, email.toString());
-            intent.putExtra(CalendarMenuActivity.PASSWORD_STRING, password.toString());
-            intent.putExtra(CalendarMenuActivity.USERNAME_STRING, username.toString());
+            Intent intent = new Intent(this, BottomNavigationActivity.class);
+            intent.putExtra(BottomNavigationActivity.EMAIL_STRING, email.toString());
+            intent.putExtra(BottomNavigationActivity.PASSWORD_STRING, password.toString());
+            intent.putExtra(BottomNavigationActivity.USERNAME_STRING, username.toString());
             // Ukoliko bismo ovde pozvali finish() activity bi bio uklonjen sa activity backstack-a
             // pre nego sto bi na njega bio push-ovan SecondActivity
 

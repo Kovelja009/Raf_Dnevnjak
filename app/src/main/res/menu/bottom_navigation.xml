@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_1"
+        android:icon="@drawable/baseline_calendar_month_24"
+        android:title="@string/calendar" />
+
+    <item
+        android:id="@+id/navigation_2"
+        android:icon="@drawable/baseline_edit_calendar_24"
+        android:title="@string/tasks" />
+
+    <item
+        android:id="@+id/navigation_3"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="@string/user" />
+</menu>
