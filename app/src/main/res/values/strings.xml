@@ -10,4 +10,11 @@
     <string name="calendar">calendar</string>
     <string name="tasks">tasks</string>
     <string name="user">user</string>
+    <string name="change_password">change password</string>
+    <string name="logout">logout</string>
+    <string name="new_password">new password</string>
+    <string name="missing_password">missing password</string>
+    <string name="confirm_change">confirm change</string>
+    <string name="cancel">cancel</string>
+    <string name="repeat_password">repeat password</string>
 </resources>

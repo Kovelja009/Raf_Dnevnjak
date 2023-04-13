@@ -40,7 +40,8 @@ dependencies {
     // Current versions
     def core_version = "1.7.0"
     def glideVersion = "4.12.0"
-    def lifecycle_version = "2.4.0"
+    def lifecycle_version = "2.4.1"
+    def fragment_version = "1.4.1"
 
     // Core
     implementation "androidx.core:core:$core_version"
@@ -57,4 +58,6 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     // Splash screen
     implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
+    // Fragment
+    implementation "androidx.fragment:fragment:$fragment_version"
 }

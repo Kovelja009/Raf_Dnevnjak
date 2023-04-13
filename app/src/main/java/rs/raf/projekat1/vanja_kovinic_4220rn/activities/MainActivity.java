@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREF_PASSWORD = "password";
     public static final String PREF_EMAIL = "email";
 
+    public static final String DEFAULT_IMAGE_URL = "https://preview.redd.it/h3qww4vmh3191.jpg?width=960&crop=smart&auto=webp&v=enabled&s=9b5ce1a7e50e30a2bc2c2873e895dcdae2626289";
+
     private TextInputEditText emailInput;
     private TextInputEditText usernameInput;
     private TextInputEditText passwordInput;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         splashScreen.setKeepOnScreenCondition(() -> {
             try {
-                Thread.sleep(500);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -64,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
             String email = sharedPref.getString(PREF_EMAIL, "");
             String username = sharedPref.getString(PREF_USERNAME, "");
             String password = sharedPref.getString(PREF_PASSWORD, "");
+
+            if(email.isEmpty() || username.isEmpty() || password.isEmpty())
+                return;
 
             Intent intent = new Intent(this, BottomNavigationActivity.class);
             intent.putExtra(BottomNavigationActivity.EMAIL_STRING, email.toString());
@@ -108,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private boolean has_special_characters(String password){
+    public static boolean has_special_characters(String password){
         String regex = "^[~#^|$%&*!]*$";
 
         Pattern pattern = Pattern.compile(regex);
@@ -122,12 +127,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    private boolean passwordValidation(String password){
+    public static boolean passwordValidation(String password){
         if(password.isEmpty()){
-            usernameMissing.setVisibility(TextView.VISIBLE);
             return false;
         }
-        usernameMissing.setVisibility(TextView.INVISIBLE);
 
         String regex = "^(?=.*[0-9])(?=.*[A-Z]).{5,20}$";
 
@@ -166,10 +169,6 @@ public class MainActivity extends AppCompatActivity {
                 toast.show();
                 return;
             }
-
-//            String text = email.toString() + " " + username.toString() + " " + password.toString();
-//            Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-//            toast.show();
 
             Intent intent = new Intent(this, BottomNavigationActivity.class);
             intent.putExtra(BottomNavigationActivity.EMAIL_STRING, email.toString());
