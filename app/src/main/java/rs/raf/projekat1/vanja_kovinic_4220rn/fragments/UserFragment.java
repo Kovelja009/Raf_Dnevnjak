@@ -158,7 +158,6 @@ public class UserFragment extends Fragment {
             passwordLayout.getEditText().setText("");
             passwordConfirmLayout.getEditText().setText("");
             showFirst();
-            Toast.makeText(getActivity().getApplicationContext(), "Cancel", Toast.LENGTH_SHORT).show();
         });
     }
 

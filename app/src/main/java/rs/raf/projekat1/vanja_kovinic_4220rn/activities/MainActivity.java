@@ -18,6 +18,8 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.regex.Pattern;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
+import rs.raf.projekat1.vanja_kovinic_4220rn.db.CalendarDBHelper;
+import rs.raf.projekat1.vanja_kovinic_4220rn.model.User;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.SplashViewModel;
 
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void check_login(){
+            CalendarDBHelper dbHelper = CalendarDBHelper.instanceOfDatabase(getApplicationContext());
+            if(dbHelper.getUsersFromDB().isEmpty()){
+                dbHelper.addUserToDatabase("admin@raf.rs", "admin", "Admin1", DEFAULT_IMAGE_URL);
+            }
+
         SharedPreferences sharedPref = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
         if (sharedPref.contains(PREF_USERNAME) && sharedPref.contains(PREF_PASSWORD) && sharedPref.contains(PREF_EMAIL)){
             String email = sharedPref.getString(PREF_EMAIL, "");
@@ -68,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
             String password = sharedPref.getString(PREF_PASSWORD, "");
 
             if(email.isEmpty() || username.isEmpty() || password.isEmpty())
+                return;
+
+
+            User user = dbHelper.getUserFromDB(email, username, password);
+            if(user == null)
                 return;
 
             Intent intent = new Intent(this, BottomNavigationActivity.class);
@@ -170,6 +182,13 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
+            CalendarDBHelper dbHelper = CalendarDBHelper.instanceOfDatabase(getApplicationContext());
+            User user = dbHelper.getUserFromDB(email.toString(), username.toString(), password.toString());
+            if(user == null){
+                Toast.makeText(getApplicationContext(), "invalid credentials", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(this, BottomNavigationActivity.class);
             intent.putExtra(BottomNavigationActivity.EMAIL_STRING, email.toString());
             intent.putExtra(BottomNavigationActivity.PASSWORD_STRING, password.toString());
@@ -194,6 +213,5 @@ public class MainActivity extends AppCompatActivity {
                 .putString(PREF_PASSWORD, password)
                 .apply();
 
-        Toast.makeText(this, "Message written to preferences", Toast.LENGTH_SHORT).show();
     }
 }
