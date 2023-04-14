@@ -31,13 +31,6 @@ public class BottomNavigationActivity extends AppCompatActivity {
     private void init(){
         initViewPager();
         initNavigation();
-
-//        textView = findViewById(R.id.pocetak);
-//        Intent intent = getIntent();
-//        if(intent != null){
-//            String name = intent.getStringExtra(EMAIL_STRING);
-//            textView.setText(name);
-//        }
     }
 
     private void initViewPager(){
@@ -51,9 +44,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 // setCurrentItem metoda viewPager samo obavesti koji je Item trenutno aktivan i onda metoda getItem u adapteru setuje odredjeni fragment za tu poziciju
-                case R.id.navigation_1: viewPager.setCurrentItem(PagerAdapter.FRAGMENT_1, true); break;
+                case R.id.navigation_1: viewPager.setCurrentItem(PagerAdapter.FRAGMENT_1, false); break;
 //                case R.id.navigation_2: viewPager.setCurrentItem(PagerAdapter.FRAGMENT_2, true); break;
-                case R.id.navigation_3: viewPager.setCurrentItem(PagerAdapter.FRAGMENT_3, true); break;
+                case R.id.navigation_3: viewPager.setCurrentItem(PagerAdapter.FRAGMENT_3, false); break;
             }
             return true;
         });

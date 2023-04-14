@@ -23,4 +23,17 @@
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">#52d053</item>
     </style>
+    <style name="MonthDisplay" parent="Theme.Raf_Dnevnjak">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">#52d053</item>
+    </style>
+    <style name="CalendarItem" parent="Theme.Raf_Dnevnjak">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#52d053</item>
+    </style>
+    <style name="DayDisplay" parent="Theme.Raf_Dnevnjak">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#52d053</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 </resources>

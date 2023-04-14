@@ -2,16 +2,102 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.CalendarFragment">
+    android:id="@+id/recyclerMainLayout"
+    tools:context=".fragments.CalendarFragment"
+    >
 
 
     <TextView
+        android:id="@+id/monthDisplayTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CALENDAR FRAGMENT"/>
+        android:text="APRIL 2023."
+        style="@style/MonthDisplay"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="center"
+        />
+
+    <LinearLayout
+        android:id="@+id/days"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:id="@+id/monTV"
+            style="@style/DayDisplay"
+            android:layout_marginStart="5dp"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+
+            android:text="@string/mon"
+            />
+        <TextView
+            android:id="@+id/tueTV"
+            style="@style/DayDisplay"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+
+            android:text="@string/tue"
+            />
+
+        <TextView
+            android:id="@+id/wedTV"
+            style="@style/DayDisplay"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+
+            android:text="@string/wed"
+            />
+
+        <TextView
+            android:id="@+id/thuTV"
+            style="@style/DayDisplay"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+
+            android:text="Thu"
+            />
+
+        <TextView
+            android:id="@+id/friTV"
+            style="@style/DayDisplay"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+
+            android:text="Fri"
+            />
+
+        <TextView
+            android:id="@+id/satTV"
+            style="@style/DayDisplay"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+
+            android:text="Sat"
+            />
+
+        <TextView
+            android:id="@+id/sunTV"
+            style="@style/DayDisplay"
+            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:text="Sun"
+            />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendarRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="7dp"
+        android:clipToPadding="false"
+        android:padding="7dp"
+        />
 
 </LinearLayout>

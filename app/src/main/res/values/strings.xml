@@ -17,4 +17,7 @@
     <string name="confirm_change">confirm change</string>
     <string name="cancel">cancel</string>
     <string name="repeat_password">repeat password</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
 </resources>
