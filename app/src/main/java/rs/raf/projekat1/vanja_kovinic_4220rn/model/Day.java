@@ -2,20 +2,17 @@ package rs.raf.projekat1.vanja_kovinic_4220rn.model;
 
 import androidx.annotation.NonNull;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Day {
     private List<Task> tasks;
+    private LocalDate date;
 
-    private int day;
-
-    public Day(int day, List<Task> tasks) {
-        this.tasks = tasks;
-        this.day = day;
-    }
-
-    public Day(int day) {
-        this.day = day;
+    public Day(LocalDate date) {
+        this.date = date;
+        tasks = new ArrayList<>();
     }
 
     public List<Task> getTasks() {
@@ -26,18 +23,17 @@ public class Day {
         this.tasks = tasks;
     }
 
-
-    public int getDay() {
-        return day;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDay(int day) {
-        this.day = day;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "Day " + day;
+        return "Day " + date.getDayOfMonth();
     }
 }

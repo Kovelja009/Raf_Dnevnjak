@@ -19,10 +19,12 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:background="@color/design_default_color_primary_dark"
+        android:background="#765898"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
         app:menu="@menu/bottom_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

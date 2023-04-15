@@ -48,6 +48,7 @@ public class CalendarFragment extends Fragment {
         initView(view);
         initRecycler(view);
         initObservers();
+//        TODO database init
     }
 
     private void initView(View view){
@@ -62,6 +63,22 @@ public class CalendarFragment extends Fragment {
         });
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 7));
         recyclerView.setAdapter(calendarAdapter);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+
+                if(!recyclerView.canScrollVertically(1)){
+                    recyclerViewModel.updateDown();
+                }
+
+                if(!recyclerView.canScrollVertically(-1)){
+                    recyclerViewModel.updateUp();
+                }
+            }
+        });
     }
 
     private void initObservers() {

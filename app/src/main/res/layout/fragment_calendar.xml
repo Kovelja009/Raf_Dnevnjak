@@ -26,7 +26,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="7dp"
+        android:background="#765898"
         android:layout_gravity="center"
+        android:gravity="center"
         >
         <TextView
             android:id="@+id/monTV"
@@ -34,7 +36,6 @@
             android:layout_marginStart="5dp"
             android:layout_height="wrap_content"
             android:layout_width="50dp"
-
             android:text="@string/mon"
             />
         <TextView
@@ -42,7 +43,6 @@
             style="@style/DayDisplay"
             android:layout_height="wrap_content"
             android:layout_width="50dp"
-
             android:text="@string/tue"
             />
 
@@ -95,9 +95,7 @@
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="7dp"
         android:clipToPadding="false"
-        android:padding="7dp"
         />
 
 </LinearLayout>
