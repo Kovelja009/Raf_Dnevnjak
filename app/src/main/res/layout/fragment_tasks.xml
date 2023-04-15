@@ -1,20 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".fragments.TasksFragment"
+    android:orientation="vertical"
+    android:layout_gravity="center"
     >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="TASKS FRAGMENT"
+        android:text="MARCH 29. 2023."
+        style="@style/MonthDisplay"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:background="@drawable/search_bar"
+        android:text="@string/show_past_tasks"
+        android:textColor="#52d053"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:iconifiedByDefault="false"
+        app:iconifiedByDefault="false"
+        app:queryHint="Search"
+        android:background="@drawable/search_bar"
+        app:itemTextColor="@color/search_bar"
+        app:itemIconTint="@color/search_bar"
+        app:theme="@style/Widget.MyApp.AutoCompleteTextView.SearchView"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/eva_purple"
+
+        >
+
+        <TextView
+            android:id="@+id/low_tv"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            style="@style/priority"
+            android:gravity="center"
+            android:background="@drawable/low_prior"
+            android:text="@string/low"
+
+            />
+
+        <TextView
+            android:id="@+id/medium_tv"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            style="@style/priority"
+            android:background="@drawable/medium_prior"
+            android:text="medium"
+
+            />
+
+        <TextView
+            android:id="@+id/high_tv"
+            android:layout_width="100dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@style/priority"
+
+            android:layout_height="match_parent"
+            android:background="@drawable/high_prior"
+            android:text="high"
+
+            />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendarRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:background="@color/eva_purple"
+            />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/eva_green"
+            android:src="@drawable/baseline_add_32"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:elevation="10dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</LinearLayout>

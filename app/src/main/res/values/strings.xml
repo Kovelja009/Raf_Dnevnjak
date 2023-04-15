@@ -20,4 +20,6 @@
     <string name="mon">Mon</string>
     <string name="tue">Tue</string>
     <string name="wed">Wed</string>
+    <string name="show_past_tasks">Show past tasks</string>
+    <string name="low">low</string>
 </resources>
