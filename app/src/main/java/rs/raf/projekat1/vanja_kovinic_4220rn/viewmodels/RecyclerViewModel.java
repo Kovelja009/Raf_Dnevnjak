@@ -14,10 +14,9 @@ import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 public class RecyclerViewModel extends ViewModel {
     private final MutableLiveData<List<Day>> days = new MutableLiveData<>();
 
+    private final MutableLiveData<String> displayMonth = new MutableLiveData<>();
     public RecyclerViewModel() {
         initialize();
-        // We are doing this because cars.setValue in the background is first checking if the reference on the object is same
-        // and if it is it will not do notifyAll. By creating a new list, we get the new reference everytime
 
     }
 
@@ -29,6 +28,8 @@ public class RecyclerViewModel extends ViewModel {
         initialDays.addAll(currentMonth(date));
         initialDays.addAll(nextMonth(date));
 
+        // We are doing this because cars.setValue in the background is first checking if the reference on the object is same
+        // and if it is it will not do notifyAll. By creating a new list, we get the new reference everytime
         ArrayList<Day> listToSubmit = new ArrayList<>(initialDays);
         days.setValue(listToSubmit);
 
@@ -108,8 +109,12 @@ public class RecyclerViewModel extends ViewModel {
 
         List<Day> newDays = new ArrayList<>();
         newDays.addAll(days.getValue());
-        newDays.addAll(nextMonth(lastDate));
-        newDays.addAll(nextMonth(lastDate.plusMonths(1)));
+
+        List<Day> appendDays = nextMonth(lastDate.minusDays(5));
+        for(Day appendDay : appendDays){
+            if(!newDays.contains(appendDay))
+                newDays.add(appendDay);
+        }
         ArrayList<Day> listToSubmit = new ArrayList<>(newDays);
         days.setValue(listToSubmit);
 
@@ -147,8 +152,25 @@ public class RecyclerViewModel extends ViewModel {
 
     }
 
+    public static String displayMonth(LocalDate date){
+        return date.getMonth().toString() + " " + date.getYear();
+    }
+    public void checkUpdateMonth(int pos){
+        for(int i = 0; i < 7; i++){
+            LocalDate date = days.getValue().get(pos+i).getDate();
+            if(date.getDayOfMonth() == 1){
+                displayMonth.setValue(displayMonth(date));
+                return;
+            }
+        }
+    }
+
     public MutableLiveData<List<Day>> getDays() {
         return days;
+    }
+
+    public MutableLiveData<String> getDisplayMonth() {
+        return displayMonth;
     }
 
     public static int getHighestPriority(Day day){

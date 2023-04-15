@@ -13,7 +13,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
+
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
+import rs.raf.projekat1.vanja_kovinic_4220rn.model.Day;
 import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.CalendarAdapter;
 import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.DayDiffItemCallback;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.RecyclerViewModel;
@@ -40,7 +43,7 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerViewModel = new ViewModelProvider(this).get(RecyclerViewModel.class);
+        recyclerViewModel = new ViewModelProvider(getActivity()).get(RecyclerViewModel.class);
         init(view);
     }
 
@@ -55,6 +58,9 @@ public class CalendarFragment extends Fragment {
         mainLayout = view.findViewById(R.id.recyclerMainLayout);
         recyclerView = view.findViewById(R.id.calendarRecyclerView);
         currentMonthTv = view.findViewById(R.id.monthDisplayTV);
+
+        recyclerViewModel.getDisplayMonth().setValue(RecyclerViewModel.displayMonth(LocalDate.now()));
+        currentMonthTv.setText(recyclerViewModel.getDisplayMonth().getValue());
     }
 
     private void initRecycler(View view) {
@@ -64,6 +70,12 @@ public class CalendarFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 7));
         recyclerView.setAdapter(calendarAdapter);
 
+       initRecyclerListeners();
+    }
+
+
+
+    private void initRecyclerListeners() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -78,12 +90,26 @@ public class CalendarFragment extends Fragment {
                     recyclerViewModel.updateUp();
                 }
             }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                GridLayoutManager glm = ((GridLayoutManager)recyclerView.getLayoutManager());
+                int firstVisiblePosition = glm.findFirstVisibleItemPosition();
+                recyclerViewModel.checkUpdateMonth(firstVisiblePosition);
+            }
         });
+
     }
 
     private void initObservers() {
         recyclerViewModel.getDays().observe(getViewLifecycleOwner(), days -> {
             calendarAdapter.submitList(days);
+        });
+
+        recyclerViewModel.getDisplayMonth().observe(getViewLifecycleOwner(), month -> {
+            currentMonthTv.setText(month);
         });
     }
 }
