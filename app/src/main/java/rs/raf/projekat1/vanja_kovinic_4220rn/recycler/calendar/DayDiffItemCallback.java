@@ -1,4 +1,4 @@
-package rs.raf.projekat1.vanja_kovinic_4220rn.recycler;
+package rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -9,7 +9,7 @@ public class DayDiffItemCallback extends DiffUtil.ItemCallback<Day>{
 
     @Override
     public boolean areItemsTheSame(@NonNull Day oldItem, @NonNull Day newItem) {
-        return oldItem.equals(newItem);
+        return oldItem.equals(newItem) && oldItem.getTasks().equals(newItem.getTasks());
     }
 
     @Override

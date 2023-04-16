@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.fragments.CalendarFragment;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.CreateTaskActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.fragments.TasksFragment;
 import rs.raf.projekat1.vanja_kovinic_4220rn.fragments.UserFragment;
 
@@ -44,7 +45,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
         switch(position){
             case FRAGMENT_1: return "1";
             case FRAGMENT_2: return "2";
-            default: return "3";
+            default: return "4";
         }
     }
 }

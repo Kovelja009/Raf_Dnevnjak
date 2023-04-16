@@ -4,9 +4,12 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Day;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
@@ -15,6 +18,10 @@ public class RecyclerViewModel extends ViewModel {
     private final MutableLiveData<List<Day>> days = new MutableLiveData<>();
 
     private final MutableLiveData<String> displayMonth = new MutableLiveData<>();
+
+    private final MutableLiveData<Day> selectedDay = new MutableLiveData<>();
+
+    private final MutableLiveData<List<Task>> tasks = new MutableLiveData<>();
     public RecyclerViewModel() {
         initialize();
 
@@ -32,7 +39,6 @@ public class RecyclerViewModel extends ViewModel {
         // and if it is it will not do notifyAll. By creating a new list, we get the new reference everytime
         ArrayList<Day> listToSubmit = new ArrayList<>(initialDays);
         days.setValue(listToSubmit);
-
     }
 
     private List<Day> currentMonth(LocalDate date){
@@ -43,7 +49,9 @@ public class RecyclerViewModel extends ViewModel {
             Day day = new Day(firstDay.plusDays(i));
             // randomize if day has task
             if(ThreadLocalRandom.current().nextInt(0, 2) == 1){
-                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, null);
+                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(1));
+                day.getTasks().add(task);
+                task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().minusDays(1), LocalDateTime.now().minusDays(1));
                 day.getTasks().add(task);
             }
             days.add(day);
@@ -59,7 +67,9 @@ public class RecyclerViewModel extends ViewModel {
 
             // randomize if day has task
             if(ThreadLocalRandom.current().nextInt(0, 2) == 1){
-                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, null);
+                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(1));
+                day.getTasks().add(task);
+                task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().minusHours(1), LocalDateTime.now().minusHours(1));
                 day.getTasks().add(task);
             }
             days.add(day);
@@ -76,7 +86,9 @@ public class RecyclerViewModel extends ViewModel {
 
             // randomize if day has task
             if(ThreadLocalRandom.current().nextInt(0, 2) == 1){
-                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, null);
+                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(1));
+                day.getTasks().add(task);
+                task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().minusHours(1), LocalDateTime.now().minusHours(1));
                 day.getTasks().add(task);
             }
 
@@ -84,6 +96,7 @@ public class RecyclerViewModel extends ViewModel {
         }
         return days;
     }
+
 
     private List<Day> fillEnd(LocalDate date){
         List<Day> days = new ArrayList<>();
@@ -94,7 +107,9 @@ public class RecyclerViewModel extends ViewModel {
 
             // randomize if day has task
             if(ThreadLocalRandom.current().nextInt(0, 2) == 1){
-                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, null);
+                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(1));
+                day.getTasks().add(task);
+                task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().minusHours(1), LocalDateTime.now().minusHours(1));
                 day.getTasks().add(task);
             }
 
@@ -128,7 +143,9 @@ public class RecyclerViewModel extends ViewModel {
             Day day = new Day(firstDay.plusDays(i));
             // randomize if day has task
             if(ThreadLocalRandom.current().nextInt(0, 2) == 1){
-                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, null);
+                Task task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().plusHours(1), LocalDateTime.now().plusHours(1));
+                day.getTasks().add(task);
+                task = new Task(ThreadLocalRandom.current().nextInt(0, 3), "Task " + i, "Description " + i, LocalDateTime.now().minusHours(1), LocalDateTime.now().minusHours(1));
                 day.getTasks().add(task);
             }
             newDays.add(day);
@@ -165,6 +182,46 @@ public class RecyclerViewModel extends ViewModel {
         }
     }
 
+    public List<Task> getPastOrAll(boolean all){
+        List<Task> allTasks = selectedDay.getValue().getTasks()
+                .stream()
+                .sorted(Comparator.comparing(Task::getEndTime))
+                .collect(Collectors.toList());
+        if(all)
+            return allTasks;
+        else
+            return allTasks.stream()
+                    .filter(task -> task.getEndTime().isAfter(LocalDateTime.now()))
+                    .collect(Collectors.toList());
+    }
+
+    public List<Task> filterTasks(String text){
+        return selectedDay.getValue().getTasks()
+                .stream()
+                .filter(task -> task.getTitle().toLowerCase().contains(text.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> filterTasksByPriority(int priority){
+        return selectedDay.getValue().getTasks()
+                .stream()
+                .filter(task -> task.getPriority() == priority)
+                .sorted(Comparator.comparing(Task::getEndTime))
+                .collect(Collectors.toList());
+    }
+
+    public List<Task> deleteTask(Task task){
+        selectedDay.getValue().getTasks().remove(task);
+        tasks.setValue(selectedDay.getValue().getTasks());
+
+        return selectedDay.getValue().getTasks()
+                .stream()
+                .sorted(Comparator.comparing(Task::getEndTime))
+                .collect(Collectors.toList());
+    }
+
+
+
     public MutableLiveData<List<Day>> getDays() {
         return days;
     }
@@ -173,12 +230,20 @@ public class RecyclerViewModel extends ViewModel {
         return displayMonth;
     }
 
-    public static int getHighestPriority(Day day){
-        int max = -1;
-        for(Task task : day.getTasks())
-            max = Math.max(max, task.getPriority());
+    public MutableLiveData<Day> getSelectedDay() {
+        return selectedDay;
+    }
 
-        return max;
+    public MutableLiveData<List<Task>> getTasks() {
+        return tasks;
+    }
+
+    public static int getHighestPriority(Day day){
+        int min = 3;
+        for(Task task : day.getTasks())
+            min = Math.min(min, task.getPriority());
+
+        return min;
     }
 
 }

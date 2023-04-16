@@ -10,6 +10,7 @@
     >
 
     <TextView
+        android:id="@+id/dateTaskTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MARCH 29. 2023."
@@ -23,29 +24,33 @@
         />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/task_toggle"
         android:background="@drawable/search_bar"
         android:text="@string/show_past_tasks"
         android:textColor="#52d053"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:layout_width="match_parent"
         android:paddingEnd="10dp"
-        android:paddingStart="10dp"
-        android:layout_height="wrap_content"
+        android:paddingStart="30dp"
+        android:layout_height="60dp"
         android:checked="true"
         />
 
-    <androidx.appcompat.widget.SearchView
+
+    <EditText
         android:id="@+id/search_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search"
+        android:layout_height="50dp"
+        android:hint="Search obligations"
+        android:textColorHint="@color/bottom_nav_color"
         android:background="@drawable/search_bar"
-        app:itemTextColor="@color/search_bar"
-        app:itemIconTint="@color/search_bar"
-        app:theme="@style/Widget.MyApp.AutoCompleteTextView.SearchView"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:drawablePadding="10dp"
+        android:textColor="@color/eva_green"
+        android:textSize="20sp"
+        android:paddingLeft="20dp"
         />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +64,7 @@
 
         <TextView
             android:id="@+id/low_tv"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             style="@style/priority"
@@ -71,7 +76,7 @@
 
         <TextView
             android:id="@+id/medium_tv"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_height="match_parent"
@@ -83,7 +88,7 @@
 
         <TextView
             android:id="@+id/high_tv"
-            android:layout_width="100dp"
+            android:layout_width="120dp"
             android:layout_gravity="center"
             android:gravity="center"
             style="@style/priority"
@@ -100,11 +105,11 @@
         android:layout_height="match_parent"
         >
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/calendarRecyclerView"
+            android:id="@+id/tasksRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:background="@color/eva_purple"
+            android:background="@color/eva_black"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -112,13 +117,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/eva_green"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
             android:src="@drawable/baseline_add_32"
+            app:backgroundTint="@color/eva_green"
+            app:elevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:elevation="10dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

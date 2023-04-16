@@ -35,7 +35,7 @@ public class Day {
     @NonNull
     @Override
     public String toString() {
-        return date.getDayOfMonth() + " " +date.getMonth().toString() + " " + date.getYear();
+        return date.getMonth().toString() + " " + date.getDayOfMonth() + ". "  + date.getYear() + ".";
     }
 
     @Override

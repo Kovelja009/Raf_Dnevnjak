@@ -48,7 +48,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/MEDIUM_PRIORITY"
         android:src="@drawable/baseline_edit_24"
         />
 
@@ -62,7 +61,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="16dp"
-        android:background="@color/MEDIUM_PRIORITY"
         android:src="@drawable/baseline_delete_24"
         />
 

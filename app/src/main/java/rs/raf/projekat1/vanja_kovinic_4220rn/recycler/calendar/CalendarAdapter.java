@@ -1,4 +1,4 @@
-package rs.raf.projekat1.vanja_kovinic_4220rn.recycler;
+package rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar;
 
 import android.content.Context;
 import android.view.LayoutInflater;

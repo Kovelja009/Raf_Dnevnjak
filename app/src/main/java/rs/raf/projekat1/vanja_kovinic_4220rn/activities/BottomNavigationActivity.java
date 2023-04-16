@@ -17,6 +17,8 @@ public class BottomNavigationActivity extends AppCompatActivity {
     public static final String USERNAME_STRING = "username";
     public static final String PASSWORD_STRING = "password";
 
+    public static final String DATE_STRING = "date_string";
+
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
 
@@ -52,4 +54,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
         });
     }
 
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
 }

@@ -13,4 +13,7 @@
     <color name="DEFAULT">#625A6C</color>
     <color name="eva_purple">#765898</color>
     <color name="eva_green">#52d053</color>
+    <color name="eva_black">#000000</color>
+    <color name="eva_grey">#5b2b41</color>
+
 </resources>

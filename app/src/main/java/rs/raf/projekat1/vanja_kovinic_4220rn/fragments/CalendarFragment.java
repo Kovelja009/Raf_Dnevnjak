@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
-import rs.raf.projekat1.vanja_kovinic_4220rn.model.Day;
-import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.CalendarAdapter;
-import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.DayDiffItemCallback;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar.CalendarAdapter;
+import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar.DayDiffItemCallback;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.RecyclerViewModel;
+import rs.raf.projekat1.vanja_kovinic_4220rn.viewpager.PagerAdapter;
 
 public class CalendarFragment extends Fragment {
     private TextView currentMonthTv;
@@ -36,14 +37,9 @@ public class CalendarFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerViewModel = new ViewModelProvider(getActivity()).get(RecyclerViewModel.class);
+        recyclerViewModel = new ViewModelProvider(requireActivity()).get(RecyclerViewModel.class);
         init(view);
     }
 
@@ -66,6 +62,9 @@ public class CalendarFragment extends Fragment {
     private void initRecycler(View view) {
         calendarAdapter = new CalendarAdapter(new DayDiffItemCallback(), day -> {
             Toast.makeText(view.getContext(), day.toString(), Toast.LENGTH_SHORT).show();
+            recyclerViewModel.getSelectedDay().setValue(day);
+            recyclerViewModel.getTasks().setValue(day.getTasks());
+            ((BottomNavigationActivity)getActivity()).getViewPager().setCurrentItem(PagerAdapter.FRAGMENT_2, false);
         });
         recyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 7));
         recyclerView.setAdapter(calendarAdapter);
@@ -106,6 +105,13 @@ public class CalendarFragment extends Fragment {
     private void initObservers() {
         recyclerViewModel.getDays().observe(getViewLifecycleOwner(), days -> {
             calendarAdapter.submitList(days);
+        });
+
+        recyclerViewModel.getTasks().observe(getViewLifecycleOwner(), tasks -> {
+            // notify calendar that color of day might have changed
+            for(int i = 0; i < recyclerViewModel.getDays().getValue().size(); i++)
+                if(recyclerViewModel.getDays().getValue().get(i).equals(recyclerViewModel.getSelectedDay().getValue()))
+                    calendarAdapter.notifyItemChanged(i);
         });
 
         recyclerViewModel.getDisplayMonth().observe(getViewLifecycleOwner(), month -> {

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.TasksFragment"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/dateTaskTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MARCH 29. 2023."
+        style="@style/MonthDisplay"
+        android:layout_gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@color/eva_purple"
+        >
+
+        <TextView
+            android:id="@+id/low_tvv"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            style="@style/priority"
+            android:gravity="center"
+            android:background="@drawable/low_prior"
+            android:text="@string/low"
+
+            />
+
+        <TextView
+            android:id="@+id/medium_tvv"
+            android:layout_width="120dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            style="@style/priority"
+            android:background="@drawable/medium_prior"
+            android:text="medium"
+
+            />
+
+        <TextView
+            android:id="@+id/high_tvv"
+            android:layout_width="120dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@style/priority"
+
+            android:layout_height="match_parent"
+            android:background="@drawable/high_prior"
+            android:text="high"
+
+            />
+    </LinearLayout>
+
+<!--    <TimePicker-->
+<!--        android:id="@+id/timePicker"-->
+
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:timePickerMode="spinner"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:background="@color/eva_green"-->
+<!--        android:amPmTextColor="@color/eva_purple"-->
+<!--        android:numbersTextColor="@color/eva_purple"-->
+<!--        />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/startTV"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="50dp"
+            android:gravity="center"
+            android:textColor="@color/eva_green"
+            style="@style/CalendarItem"
+            android:background="@drawable/search_bar"
+            android:text="Start time"/>
+
+        <TextView
+            android:id="@+id/endTV"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/eva_green"
+            style="@style/CalendarItem"
+            android:background="@drawable/search_bar"
+            android:text="End time"
+
+            />
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/titleEt"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:hint="Title"
+        android:textColorHint="@color/bottom_nav_color"
+        android:background="@drawable/search_bar"
+        android:drawablePadding="10dp"
+        android:textColor="@color/eva_green"
+        android:textSize="20sp"
+        android:paddingLeft="30dp"
+        />
+
+    <EditText
+        android:id="@+id/descriptionEt"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Description"
+        android:gravity="top"
+        android:textColorHint="@color/bottom_nav_color"
+        android:background="@drawable/search_bar"
+        android:drawablePadding="10dp"
+        android:textColor="@color/eva_green"
+        android:textSize="20sp"
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"
+        />
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        >
+
+    <Button
+        android:id="@+id/createBtn"
+
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="@color/eva_green"
+        android:text="create"
+        android:textColor="@color/eva_purple"
+
+        style="?android:attr/buttonBarButtonStyle" />
+
+    <Button
+        android:id="@+id/cancel_btn_create"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="cancel"
+        android:backgroundTint="@color/eva_purple"
+        android:textColor="@color/eva_green"
+        style="?android:attr/buttonBarButtonStyle" />
+    </LinearLayout>
+
+
+</LinearLayout>
