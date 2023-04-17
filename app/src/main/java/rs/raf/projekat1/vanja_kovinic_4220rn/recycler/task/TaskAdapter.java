@@ -23,7 +23,6 @@ import java.util.function.Consumer;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
-import rs.raf.projekat1.vanja_kovinic_4220rn.activities.CreateTaskActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.EditTaskActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.RecyclerViewModel;
@@ -46,7 +45,6 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // Create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
-//        view.getLayoutParams().height = (int) (parent.getHeight() * 0.17);
 
         return new TaskAdapter.ViewHolder(view, parent.getContext(), position -> {
             Task task = getItem(position);
@@ -102,7 +100,7 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
                         .setAction("Delete", v1 -> {
                             List<Task>  updated = recyclerViewModel.deleteTask(task);
                             TaskAdapter.this.submitList(updated);
-                            Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                         })
                         .show();
             });

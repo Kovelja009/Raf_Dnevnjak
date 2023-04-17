@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.CreateTaskActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.ShowActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Day;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar.DayDiffItemCallback;
@@ -104,6 +105,11 @@ public class TasksFragment extends Fragment {
     private void initRecycler(View view){
         taskAdapter = new TaskAdapter(new TaskDiffItemCallback(), task ->{
             Toast.makeText(view.getContext(), task.getTitle(), Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(getActivity(), ShowActivity.class);
+            intent.putExtra(BottomNavigationActivity.DATE_STRING, Task.convertDateTimeToPresentString(task.getEndTime()));
+            startActivity(intent);
+
         }, recyclerViewModel, getActivity());
         // context od activity-a
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));

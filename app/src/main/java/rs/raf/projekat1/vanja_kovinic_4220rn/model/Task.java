@@ -3,6 +3,7 @@ package rs.raf.projekat1.vanja_kovinic_4220rn.model;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class Task {
@@ -66,6 +67,16 @@ public class Task {
         int month = Integer.parseInt(parts[1]);
         int year = Integer.parseInt(parts[2]);
         return LocalDateTime.of(year,month,day,hour,minute);
+    }
+
+    public static String convertDateTimeToPresentString(LocalDateTime time){
+        String month = monthMap.keySet().stream().filter(key -> monthMap.get(key) == time.getMonthValue()).findFirst().get().toUpperCase();
+
+        return month + ". " + time.getMonthValue() + ". " + time.getYear() + ".";
+    }
+
+    public String from_toDate(){
+        return startTime.getHour() + ":" + startTime.getMinute() + " - " + endTime.getHour() + ":" + endTime.getMinute();
     }
 
     public int getPriority() {

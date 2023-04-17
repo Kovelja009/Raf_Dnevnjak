@@ -23,4 +23,6 @@
     <string name="show_past_tasks">Show past tasks</string>
     <string name="low">low</string>
     <string name="edit">edit</string>
+    <string name="delete">delete</string>
+    <string name="create">create</string>
 </resources>
