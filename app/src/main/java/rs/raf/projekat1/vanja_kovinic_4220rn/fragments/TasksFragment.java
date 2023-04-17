@@ -104,7 +104,7 @@ public class TasksFragment extends Fragment {
     private void initRecycler(View view){
         taskAdapter = new TaskAdapter(new TaskDiffItemCallback(), task ->{
             Toast.makeText(view.getContext(), task.getTitle(), Toast.LENGTH_SHORT).show();
-        }, recyclerViewModel);
+        }, recyclerViewModel, getActivity());
         // context od activity-a
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(taskAdapter);

@@ -15,5 +15,7 @@
     <color name="eva_green">#52d053</color>
     <color name="eva_black">#000000</color>
     <color name="eva_grey">#5b2b41</color>
+    <color name="priority_background">#52d053</color>
+    <color name="priority_background_unselected">#765898</color>
 
 </resources>

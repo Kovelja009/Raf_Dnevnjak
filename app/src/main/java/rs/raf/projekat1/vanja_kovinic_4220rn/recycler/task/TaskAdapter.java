@@ -1,6 +1,8 @@
 package rs.raf.projekat1.vanja_kovinic_4220rn.recycler.task;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.CreateTaskActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.EditTaskActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.RecyclerViewModel;
 
@@ -27,10 +32,13 @@ import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.RecyclerViewModel;
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
     private final Consumer<Task> onTaskClicked;
     private final RecyclerViewModel recyclerViewModel;
-    public TaskAdapter(@NonNull DiffUtil.ItemCallback<Task> diffCallback, Consumer<Task> onTaskClicked, RecyclerViewModel recyclerViewModel) {
+
+    private final Activity activity;
+    public TaskAdapter(@NonNull DiffUtil.ItemCallback<Task> diffCallback, Consumer<Task> onTaskClicked, RecyclerViewModel recyclerViewModel, Activity activity) {
         super(diffCallback);
         this.onTaskClicked = onTaskClicked;
         this.recyclerViewModel = recyclerViewModel;
+        this.activity = activity;
     }
 
     @NonNull
@@ -82,7 +90,10 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
 
             ImageView editIV = itemView.findViewById(R.id.editPV);
             editIV.setOnClickListener(v -> {
-                Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity, EditTaskActivity.class);
+                intent.putExtra(BottomNavigationActivity.DATE_STRING, recyclerViewModel.getSelectedDay().getValue().toString());
+                intent.putExtra(BottomNavigationActivity.TASK_TITLE, task.getTitle());
+                activity.startActivity(intent);
             });
 
             ImageView deleteIV = itemView.findViewById(R.id.deletePV);
