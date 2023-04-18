@@ -174,12 +174,13 @@ public class EditTaskActivity extends AppCompatActivity {
                 Toast.makeText(this, "Start time must be before end time", Toast.LENGTH_SHORT).show();
                 return;
             }
-            //TODO check in database
+
             if(!check_in_database(startDate, endDate)){
                 Toast.makeText(this, "Time is already taken", Toast.LENGTH_SHORT).show();
                 return;
             }
             dbHelper.updateTaskInDB(title, description, Task.convertTimeToDBFromat(startDate), Task.convertTimeToDBFromat(endDate), String.valueOf(getPriority()), username, Task.convertTimeToDBFromat(og_startTime));
+            System.out.println("USAOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
             finish();
         });
 

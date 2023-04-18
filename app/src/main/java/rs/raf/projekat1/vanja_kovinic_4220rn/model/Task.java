@@ -98,7 +98,7 @@ public class Task {
     public static String convertDateTimeToPresentString(LocalDateTime time){
         String month = monthMap.keySet().stream().filter(key -> monthMap.get(key) == time.getMonthValue()).findFirst().get().toUpperCase();
 
-        return month + ". " + time.getMonthValue() + ". " + time.getYear() + ".";
+        return month + " " + time.getMonthValue() + ". " + time.getYear() + ".";
     }
 
     public String from_toDate(){

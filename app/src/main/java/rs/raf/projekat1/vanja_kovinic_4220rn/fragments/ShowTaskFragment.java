@@ -1,6 +1,8 @@
 package rs.raf.projekat1.vanja_kovinic_4220rn.fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,8 @@ import java.util.List;
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.EditTaskActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.MainActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.db.CalendarDBHelper;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.task.TaskAdapter;
 
@@ -33,7 +37,10 @@ public class ShowTaskFragment extends Fragment {
 
     private Task task;
 
+    private String username;
+    private CalendarDBHelper dbHelper;
 
+    private int position;
 
     public ShowTaskFragment(){
         super(R.layout.fragment_show_task);
@@ -43,16 +50,23 @@ public class ShowTaskFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle args = getArguments();
-        String title = args.getString(BottomNavigationActivity.TASK_TITLE);
-
+        String startTime = args.getString(BottomNavigationActivity.CURRENT_START_TIME);
+        position = args.getInt(BottomNavigationActivity.POSITION);
 //        TODO get task from database
-        task = new Task(1, title, "descriptionnnn", LocalDateTime.now(), LocalDateTime.now());
+        initDatabase();
+        task = dbHelper.getTaskFromDB(username, startTime);
         init(view);
+    }
+
+    private void initDatabase(){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
+        String usernameString = sharedPreferences.getString(MainActivity.PREF_USERNAME, "");
+        username = usernameString;
+        dbHelper = CalendarDBHelper.instanceOfDatabase(null);
     }
 
     private void init(View view){
         initViews(view);
-//        titleTv.setText(task.getTitle());
         initListeners(view);
     }
     private void initViews(View view){
@@ -79,7 +93,7 @@ public class ShowTaskFragment extends Fragment {
         editBtn.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), EditTaskActivity.class);
             intent.putExtra(BottomNavigationActivity.DATE_STRING, Task.convertDateTimeToPresentString(task.getStartTime()));
-            intent.putExtra(BottomNavigationActivity.TASK_TITLE, task.getTitle());
+            intent.putExtra(BottomNavigationActivity.CURRENT_START_TIME, Task.convertTimeToDBFromat(task.getStartTime()));
             getActivity().startActivity(intent);
         });
         deleteBtn.setOnClickListener(v -> {
@@ -87,7 +101,9 @@ public class ShowTaskFragment extends Fragment {
 
             Snackbar.make(view, "Delete", Snackbar.LENGTH_SHORT)
                     .setAction("Delete", v1 -> {
+                        dbHelper.deleteTaskFromDB(username, Task.convertTimeToDBFromat(task.getStartTime()));
                         Toast.makeText(view.getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+
                         getActivity().onBackPressed();
                     })
                     .show();
@@ -105,5 +121,20 @@ public class ShowTaskFragment extends Fragment {
         return "Low";
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateView(dbHelper.getTasksByDayFromDB(username, task.getStartTime().toLocalDate()).get(position));
+    }
 
+    private void updateView(Task task){
+
+        timeTv.setText(task.from_toDate());
+
+        titleTv.setText(task.getTitle());
+
+        descriptionTv.setText(task.getDescription());
+
+        priorityTv.setText(StringPriority(task.getPriority()));
+    }
 }

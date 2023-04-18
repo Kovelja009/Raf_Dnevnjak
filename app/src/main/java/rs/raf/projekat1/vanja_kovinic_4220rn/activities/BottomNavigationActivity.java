@@ -24,6 +24,7 @@ public class BottomNavigationActivity extends AppCompatActivity {
     public static final String CURRENT_START_TIME = "current_start_time";
     public static final String TASK_TITLE = "task_title";
 
+    public static final String POSITION = "position";
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigationView;
 

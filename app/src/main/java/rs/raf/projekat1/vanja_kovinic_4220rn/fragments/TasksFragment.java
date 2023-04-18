@@ -120,8 +120,19 @@ public class TasksFragment extends Fragment {
         taskAdapter = new TaskAdapter(new TaskDiffItemCallback(), task ->{
             Toast.makeText(view.getContext(), task.getTitle(), Toast.LENGTH_SHORT).show();
 
+            String date = recyclerViewModel.getSelectedDay().getValue().getParsableDate();
             Intent intent = new Intent(getActivity(), ShowActivity.class);
             intent.putExtra(BottomNavigationActivity.DATE_STRING, Task.convertDateTimeToPresentString(task.getEndTime()));
+            intent.putExtra(BottomNavigationActivity.CURRENT_DATE, date);
+            //get position of task in list
+            List<Task> tasks = dbHelper.getTasksByDayFromDB(username, task.getStartTime().toLocalDate());
+            int i = 0;
+            for(Task t : tasks){
+                if(t.getStartTime().equals(task.getStartTime()))
+                    intent.putExtra(BottomNavigationActivity.POSITION, i);
+                i++;
+            }
+
             startActivity(intent);
 
         }, recyclerViewModel, getActivity());

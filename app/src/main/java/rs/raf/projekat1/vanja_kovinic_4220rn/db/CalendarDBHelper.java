@@ -13,8 +13,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Day;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
@@ -235,7 +237,8 @@ public class CalendarDBHelper extends SQLiteOpenHelper {
                 if(startTime.toLocalDate().equals(day) || endTime.toLocalDate().equals(day))
                     tasks.add(new Task(priorityFromDB, titleFromDB, descriptionFromDB, startTime, endTime));
             }
-            return tasks;
+
+            return tasks.stream().sorted(Comparator.comparing(Task::getStartTime)).collect(Collectors.toList());
         }catch (Exception e){
             e.printStackTrace();
             return new ArrayList<>();
