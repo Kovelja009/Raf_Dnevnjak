@@ -19,6 +19,9 @@ public class BottomNavigationActivity extends AppCompatActivity {
 
     public static final String DATE_STRING = "date_string";
 
+    public static final String CURRENT_DATE = "current_date";
+
+    public static final String CURRENT_START_TIME = "current_start_time";
     public static final String TASK_TITLE = "task_title";
 
     private ViewPager viewPager;

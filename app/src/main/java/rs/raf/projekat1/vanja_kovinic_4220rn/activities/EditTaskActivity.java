@@ -1,7 +1,9 @@
 package rs.raf.projekat1.vanja_kovinic_4220rn.activities;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,9 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
+import rs.raf.projekat1.vanja_kovinic_4220rn.db.CalendarDBHelper;
+import rs.raf.projekat1.vanja_kovinic_4220rn.model.Day;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 
 public class EditTaskActivity extends AppCompatActivity {
@@ -36,20 +42,36 @@ public class EditTaskActivity extends AppCompatActivity {
     private boolean isMedium = false;
     private boolean isHigh = false;
 
+    private LocalDate currentDate;
+    private String username;
+    private CalendarDBHelper dbHelper;
+
+    private LocalDateTime og_startTime;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
         Intent intent = getIntent();
-        String taskTitle = "";
         String dateString = "";
+        String startTime = "";
         if(intent != null){
             dateString = intent.getStringExtra(BottomNavigationActivity.DATE_STRING);
-            taskTitle = intent.getStringExtra(BottomNavigationActivity.TASK_TITLE);
+            startTime = intent.getStringExtra(BottomNavigationActivity.CURRENT_START_TIME);
+            currentDate = Task.getLocalDateFromTimeString(startTime);
         }
 
-        Task task = new Task(0, taskTitle, "dummy", LocalDateTime.now(), LocalDateTime.now());
+        initDatabase();
+        Task task = dbHelper.getTaskFromDB(username, startTime);
+        og_startTime = task.getStartTime();
         init(task, dateString);
+    }
+
+    private void initDatabase(){
+        SharedPreferences sharedPreferences = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
+        String usernameString = sharedPreferences.getString(MainActivity.PREF_USERNAME, "");
+        username = usernameString;
+        dbHelper = CalendarDBHelper.instanceOfDatabase(null);
     }
 
     private void init(Task task, String dateString){
@@ -139,7 +161,7 @@ public class EditTaskActivity extends AppCompatActivity {
             }else if(isHigh){
                 priority = "HIGH";
             }
-            String date = Task.convertStringTimeToDBFormat(dateTv.getText().toString());
+            String date = Task.convertDateToStringDBFormat(dateTv.getText().toString());
             LocalDateTime startDate = Task.parseStringToTime(start, date);
             LocalDateTime endDate = Task.parseStringToTime(end, date);
 
@@ -153,10 +175,47 @@ public class EditTaskActivity extends AppCompatActivity {
                 return;
             }
             //TODO check in database
-
+            if(!check_in_database(startDate, endDate)){
+                Toast.makeText(this, "Time is already taken", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            dbHelper.updateTaskInDB(title, description, Task.convertTimeToDBFromat(startDate), Task.convertTimeToDBFromat(endDate), String.valueOf(getPriority()), username, Task.convertTimeToDBFromat(og_startTime));
             finish();
         });
 
+    }
+
+    private int getPriority(){
+        if(isLow){
+            return 2;
+        }else if(isMedium){
+            return 1;
+        }else if(isHigh){
+            return 0;
+        }
+        return 0;
+    }
+
+    private boolean check_in_database(LocalDateTime startDate, LocalDateTime endDate){
+        List<Task> tasks = dbHelper.getTasksByDayFromDB(username, currentDate);
+        for(Task task : tasks){
+            if(task.getStartTime().isEqual(og_startTime))
+                continue;
+            if(task.getStartTime().isEqual(startDate) || task.getEndTime().isEqual(endDate)
+                    || task.getStartTime().isEqual(endDate) || task.getEndTime().isEqual(startDate)){
+                return false;
+            }
+            if(task.getStartTime().isBefore(startDate) && task.getEndTime().isAfter(startDate)){
+                return false;
+            }
+            if(task.getStartTime().isBefore(endDate) && task.getEndTime().isAfter(endDate)){
+                return false;
+            }
+            if(task.getStartTime().isAfter(startDate) && task.getEndTime().isBefore(endDate)){
+                return false;
+            }
+        }
+        return true;
     }
 
     private void setTasksPriority(int priority){

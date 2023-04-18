@@ -23,6 +23,7 @@ import java.util.function.Consumer;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.CreateTaskActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.EditTaskActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.RecyclerViewModel;
@@ -81,6 +82,9 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
 
             if(task.getEndTime().isBefore(LocalDateTime.now()))
                 itemView.setBackgroundResource(R.color.eva_grey);
+            else
+                itemView.setBackgroundResource(R.color.eva_black);
+
 
             TextView timeTV = itemView.findViewById(R.id.timeTV);
             String time = task.parseTimeToString(task.getStartTime()) + " - " + task.parseTimeToString(task.getEndTime());
@@ -90,7 +94,8 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.ViewHolder> {
             editIV.setOnClickListener(v -> {
                 Intent intent = new Intent(activity, EditTaskActivity.class);
                 intent.putExtra(BottomNavigationActivity.DATE_STRING, recyclerViewModel.getSelectedDay().getValue().toString());
-                intent.putExtra(BottomNavigationActivity.TASK_TITLE, task.getTitle());
+                intent.putExtra(BottomNavigationActivity.CURRENT_START_TIME, Task.convertTimeToDBFromat(task.getStartTime()));
+
                 activity.startActivity(intent);
             });
 

@@ -1,9 +1,9 @@
 package rs.raf.projekat1.vanja_kovinic_4220rn.model;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Locale;
 
 
 public class Task {
@@ -50,12 +50,28 @@ public class Task {
 
 
 
-    public static String convertStringTimeToDBFormat(String date){
+    public static String convertDateToStringDBFormat(String date){
         String[] parts = date.split(" ");
         int month = monthMap.get(parts[0].toLowerCase());
-        int day = Integer.parseInt(parts[1].replace(".",""));
-        int year = Integer.parseInt(parts[2].replace(".",""));
+        int day = Integer.parseInt(parts[1].toLowerCase().replace(".",""));
+        int year = Integer.parseInt(parts[2].toLowerCase().replace(".",""));
         return day + "-" + month + "-" + year;
+    }
+
+    public static String convertTimeToDBFromat(LocalDateTime time){
+        return time.getDayOfMonth() + "-" + time.getMonthValue() + "-" + time.getYear() + "|" + time.getHour() + ":" + time.getMinute();
+    }
+
+    public static LocalDateTime convertTimeFromDBFormat(String time){
+        String[] parts = time.split("\\|");
+        String[] dateParts = parts[0].split("-");
+        int day = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int year = Integer.parseInt(dateParts[2]);
+        String[] timeParts = parts[1].split(":");
+        int hour = Integer.parseInt(timeParts[0]);
+        int minute = Integer.parseInt(timeParts[1]);
+        return LocalDateTime.of(year,month,day,hour,minute);
     }
 
     public static LocalDateTime parseStringToTime(String time, String Date){
@@ -67,6 +83,16 @@ public class Task {
         int month = Integer.parseInt(parts[1]);
         int year = Integer.parseInt(parts[2]);
         return LocalDateTime.of(year,month,day,hour,minute);
+    }
+
+    public static LocalDate getLocalDateFromTimeString(String timeString){
+        String[] og_parts = timeString.split("\\|");
+
+        String[] parts = og_parts[0].split("-");
+        int day = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+        int year = Integer.parseInt(parts[2]);
+        return LocalDate.of(year,month,day);
     }
 
     public static String convertDateTimeToPresentString(LocalDateTime time){

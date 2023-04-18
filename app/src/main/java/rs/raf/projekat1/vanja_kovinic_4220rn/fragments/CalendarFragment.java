@@ -1,5 +1,7 @@
 package rs.raf.projekat1.vanja_kovinic_4220rn.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,6 +19,8 @@ import java.time.LocalDate;
 
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.MainActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.db.CalendarDBHelper;
 import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar.CalendarAdapter;
 import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar.DayDiffItemCallback;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.RecyclerViewModel;
@@ -31,6 +35,10 @@ public class CalendarFragment extends Fragment {
 
     private CalendarAdapter calendarAdapter;
 
+    private CalendarDBHelper dbHelper;
+
+    private String username;
+
 
     public CalendarFragment() {
         super(R.layout.fragment_calendar);
@@ -40,7 +48,16 @@ public class CalendarFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerViewModel = new ViewModelProvider(requireActivity()).get(RecyclerViewModel.class);
+        initDatabase();
+        recyclerViewModel.setDatabase(dbHelper, username);
         init(view);
+    }
+
+    private void initDatabase(){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
+        String usernameString = sharedPreferences.getString(MainActivity.PREF_USERNAME, "");
+        username = usernameString;
+        dbHelper = CalendarDBHelper.instanceOfDatabase(null);
     }
 
     private void init(View view){

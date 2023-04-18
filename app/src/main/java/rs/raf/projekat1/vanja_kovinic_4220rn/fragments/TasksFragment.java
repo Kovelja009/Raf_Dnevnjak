@@ -35,7 +35,9 @@ import java.util.stream.Collectors;
 import rs.raf.projekat1.vanja_kovinic_4220rn.R;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.BottomNavigationActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.CreateTaskActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.activities.MainActivity;
 import rs.raf.projekat1.vanja_kovinic_4220rn.activities.ShowActivity;
+import rs.raf.projekat1.vanja_kovinic_4220rn.db.CalendarDBHelper;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Day;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.Task;
 import rs.raf.projekat1.vanja_kovinic_4220rn.recycler.calendar.DayDiffItemCallback;
@@ -65,6 +67,10 @@ public class TasksFragment extends Fragment {
     private static boolean mediumTasks = false;
     private static boolean highTasks = false;
 
+    private  String username = "";
+
+    private CalendarDBHelper dbHelper;
+
 
     public TasksFragment() {
         super(R.layout.fragment_tasks);
@@ -79,7 +85,15 @@ public class TasksFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerViewModel = new ViewModelProvider(requireActivity()).get(RecyclerViewModel.class);
+        initDatabase();
         init(view);
+    }
+
+    private void initDatabase(){
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
+        String usernameString = sharedPreferences.getString(MainActivity.PREF_USERNAME, "");
+        username = usernameString;
+        dbHelper = CalendarDBHelper.instanceOfDatabase(null);
     }
 
     private void init(View view){
@@ -132,6 +146,8 @@ public class TasksFragment extends Fragment {
 
         lowTasksTV.setOnClickListener(view -> {
             lowTasks = !lowTasks;
+            highTasks = false;
+            mediumTasks = false;
             if(lowTasks)
                 taskAdapter.submitList(recyclerViewModel.filterTasksByPriority(Task.PRIORITY_LOW));
             else
@@ -140,6 +156,8 @@ public class TasksFragment extends Fragment {
 
         mediumTasksTV.setOnClickListener(view -> {
             mediumTasks = !mediumTasks;
+            highTasks = false;
+            lowTasks = false;
             if(mediumTasks)
                 taskAdapter.submitList(recyclerViewModel.filterTasksByPriority(Task.PRIORITY_MEDIUM));
             else
@@ -148,6 +166,8 @@ public class TasksFragment extends Fragment {
 
         highTasksTV.setOnClickListener(view -> {
             highTasks = !highTasks;
+            lowTasks = false;
+            mediumTasks = false;
             if(highTasks)
                 taskAdapter.submitList(recyclerViewModel.filterTasksByPriority(Task.PRIORITY_HIGH));
             else
@@ -155,8 +175,12 @@ public class TasksFragment extends Fragment {
         });
 
         addTaskBtn.setOnClickListener(view -> {
+            String date = recyclerViewModel.getSelectedDay().getValue().getParsableDate();
+
             Intent intent = new Intent(getActivity(), CreateTaskActivity.class);
             intent.putExtra(BottomNavigationActivity.DATE_STRING, recyclerViewModel.getSelectedDay().getValue().toString());
+            intent.putExtra(BottomNavigationActivity.CURRENT_DATE, date);
+
             startActivity(intent);
         });
     }
@@ -165,7 +189,9 @@ public class TasksFragment extends Fragment {
         recyclerViewModel.getSelectedDay().observe(getViewLifecycleOwner(), day -> {
             if(day != null){
                 currentDateTV.setText(day.toString());
-                taskAdapter.submitList(day.getTasks()
+                List<Task> tasks = dbHelper.getTasksByDayFromDB(username, day.getDate());
+
+                taskAdapter.submitList(tasks
                         .stream()
                         .sorted(Comparator.comparing(Task::getEndTime))
                         .collect(Collectors.toList()));
@@ -179,5 +205,14 @@ public class TasksFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<Task> tasks = dbHelper.getTasksByDayFromDB(username, recyclerViewModel.getSelectedDay().getValue().getDate());
+        recyclerViewModel.getTasks().setValue(tasks);
+        recyclerViewModel.getSelectedDay().getValue().setTasks(tasks);
+        taskAdapter.submitList(recyclerViewModel.getPastOrAll(showPastSwitch.isChecked()));
+        taskAdapter.notifyDataSetChanged();
+    }
 
 }

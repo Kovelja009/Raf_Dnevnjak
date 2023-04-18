@@ -32,6 +32,15 @@ public class Day {
         this.date = date;
     }
 
+    public String getParsableDate(){
+        return date.getDayOfMonth() + "-" + date.getMonthValue() + "-" + date.getYear();
+    }
+
+    public static LocalDate getLocalDateFromString(String parsableDate){
+        String[] parts = parsableDate.split("-");
+        return LocalDate.of(Integer.parseInt(parts[2]), Integer.parseInt(parts[1]), Integer.parseInt(parts[0]));
+    }
+
     @NonNull
     @Override
     public String toString() {

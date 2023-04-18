@@ -22,6 +22,7 @@ import rs.raf.projekat1.vanja_kovinic_4220rn.db.CalendarDBHelper;
 import rs.raf.projekat1.vanja_kovinic_4220rn.fragments.CalendarFragment;
 import rs.raf.projekat1.vanja_kovinic_4220rn.model.User;
 import rs.raf.projekat1.vanja_kovinic_4220rn.viewmodels.SplashViewModel;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     private SplashViewModel splashViewModel;
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             CalendarDBHelper dbHelper = CalendarDBHelper.instanceOfDatabase(getApplicationContext());
             if(dbHelper.getUsersFromDB().isEmpty()){
                 dbHelper.addUserToDatabase("admin@raf.rs", "admin", "Admin1", DEFAULT_IMAGE_URL);
+                Timber.wtf( "Added admin user");
             }
 
         SharedPreferences sharedPref = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);

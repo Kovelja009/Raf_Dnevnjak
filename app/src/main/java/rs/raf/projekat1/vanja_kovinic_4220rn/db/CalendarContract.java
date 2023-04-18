@@ -16,4 +16,15 @@ public class CalendarContract {
 
         public static final String COLUMN_NAME_URL = "url";
     }
+
+    public static class TaskEntry implements BaseColumns {
+        public static final String TABLE_NAME = "tasks";
+        public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_DESCRIPTION = "description";
+
+        public static final String COLUMN_NAME_START_TIME = "start_date";
+        public static final String COLUMN_NAME_END_TIME = "end_time";
+        public static final String COLUMN_NAME_PRIORITY = "priority";
+        public static final String COLUMN_NAME_USERNAME = "user";
+    }
 }
