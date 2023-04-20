@@ -52,7 +52,7 @@
             android:layout_height="match_parent"
             style="@style/priority"
             android:background="@drawable/medium_prior"
-            android:text="medium"
+            android:text="@string/medium"
 
             />
 
@@ -65,24 +65,11 @@
 
             android:layout_height="match_parent"
             android:background="@drawable/high_prior"
-            android:text="high"
+            android:text="@string/high"
 
             />
     </LinearLayout>
 
-<!--    <TimePicker-->
-<!--        android:id="@+id/timePicker"-->
-
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:timePickerMode="spinner"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:background="@color/eva_green"-->
-<!--        android:amPmTextColor="@color/eva_purple"-->
-<!--        android:numbersTextColor="@color/eva_purple"-->
-<!--        />-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -100,7 +87,8 @@
             android:textColor="@color/eva_green"
             style="@style/CalendarItem"
             android:background="@drawable/search_bar"
-            android:text="Start time"/>
+            android:text="@string/start_time"
+            />
 
         <TextView
             android:id="@+id/endTV"
@@ -111,7 +99,7 @@
             android:textColor="@color/eva_green"
             style="@style/CalendarItem"
             android:background="@drawable/search_bar"
-            android:text="End time"
+            android:text="@string/end_time"
 
             />
     </LinearLayout>
@@ -121,7 +109,7 @@
         android:id="@+id/titleEt"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:hint="Title"
+        android:hint="@string/title"
         android:textColorHint="@color/bottom_nav_color"
         android:background="@drawable/search_bar"
         android:drawablePadding="10dp"
@@ -136,7 +124,7 @@
         android:layout_height="250dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:hint="Description"
+        android:hint="@string/description"
         android:gravity="top"
         android:textColorHint="@color/bottom_nav_color"
         android:background="@drawable/search_bar"

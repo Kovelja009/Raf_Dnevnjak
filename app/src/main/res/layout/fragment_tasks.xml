@@ -41,7 +41,7 @@
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="Search obligations"
+        android:hint="@string/search_obligations"
         android:textColorHint="@color/bottom_nav_color"
         android:background="@drawable/search_bar"
         android:drawableStart="@drawable/ic_baseline_search_24"
@@ -82,7 +82,7 @@
             android:layout_height="match_parent"
             style="@style/priority"
             android:background="@drawable/medium_prior"
-            android:text="medium"
+            android:text="@string/medium"
 
             />
 
@@ -95,7 +95,7 @@
 
             android:layout_height="match_parent"
             android:background="@drawable/high_prior"
-            android:text="high"
+            android:text="@string/high"
 
             />
     </LinearLayout>

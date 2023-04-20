@@ -52,7 +52,7 @@
             android:layout_height="match_parent"
             style="@style/priority"
             android:background="@drawable/medium_prior"
-            android:text="medium"
+            android:text="@string/medium"
 
             />
 
@@ -65,7 +65,7 @@
 
             android:layout_height="match_parent"
             android:background="@drawable/high_prior"
-            android:text="high"
+            android:text="@string/high"
 
             />
     </LinearLayout>
@@ -121,7 +121,7 @@
         android:id="@+id/titleEt1"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:hint="Title"
+        android:hint="@String/Title"
         android:textColorHint="@color/bottom_nav_color"
         android:background="@drawable/search_bar"
         android:drawablePadding="10dp"
@@ -136,7 +136,7 @@
         android:layout_height="250dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:hint="Description"
+        android:hint="@String/Description"
         android:gravity="top"
         android:textColorHint="@color/bottom_nav_color"
         android:background="@drawable/search_bar"
@@ -175,7 +175,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="cancel"
+        android:text="@string/cancel"
         android:backgroundTint="@color/eva_purple"
         android:textColor="@color/eva_green"
         style="?android:attr/buttonBarButtonStyle" />

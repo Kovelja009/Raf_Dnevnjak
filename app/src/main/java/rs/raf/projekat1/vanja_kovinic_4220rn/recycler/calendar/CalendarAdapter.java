@@ -65,16 +65,16 @@ public class CalendarAdapter extends ListAdapter<Day, CalendarAdapter.ViewHolder
             dayTV.setText(String.valueOf(day.getDate().getDayOfMonth()));
             switch(RecyclerViewModel.getHighestPriority(day)){
                 case Task.PRIORITY_LOW:
-                    dayTV.setBackgroundResource(R.color.LOW_PRIORITY);
+                    dayTV.setBackgroundResource(R.drawable.low);
                     break;
                 case Task.PRIORITY_MEDIUM:
-                    dayTV.setBackgroundResource(R.color.MEDIUM_PRIORITY);
+                    dayTV.setBackgroundResource(R.drawable.medium);
                     break;
                 case Task.PRIORITY_HIGH:
-                    dayTV.setBackgroundResource(R.color.HIGH_PRIORITY);
+                    dayTV.setBackgroundResource(R.drawable.high);
                     break;
                 default:
-                    dayTV.setBackgroundResource(R.color.DEFAULT);
+                    dayTV.setBackgroundResource(R.drawable.def);
                     break;
             }
         }

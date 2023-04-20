@@ -7,6 +7,7 @@
     tools:context=".fragments.UserFragment"
     android:orientation="vertical"
     android:layout_gravity="center"
+    android:windowSoftInputMode="adjustPan">
     >
 
 
@@ -89,12 +90,17 @@
         app:layout_constraintBottom_toTopOf="@id/change_password_missing"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="parent"
+        android:windowSoftInputMode="adjustPan">
+
+    >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/change_pasword_input1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -107,7 +113,9 @@
         android:text="@string/missing_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usernameInput" />
+        app:layout_constraintTop_toBottomOf="@id/usernameInput"
+        android:windowSoftInputMode="adjustPan"
+    />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_gravity="center"

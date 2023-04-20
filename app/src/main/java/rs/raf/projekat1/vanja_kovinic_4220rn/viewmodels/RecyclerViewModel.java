@@ -211,6 +211,8 @@ public class RecyclerViewModel extends ViewModel {
     }
 
     public List<Task> filterTasks(String text){
+        if(selectedDay.getValue() == null)
+            return new ArrayList<>();
         return selectedDay.getValue().getTasks()
                 .stream()
                 .filter(task -> task.getTitle().toLowerCase().contains(text.toLowerCase()))
@@ -218,6 +220,8 @@ public class RecyclerViewModel extends ViewModel {
     }
 
     public List<Task> filterTasksByPriority(int priority){
+        if(selectedDay.getValue() == null)
+            return new ArrayList<>();
         return selectedDay.getValue().getTasks()
                 .stream()
                 .filter(task -> task.getPriority() == priority)

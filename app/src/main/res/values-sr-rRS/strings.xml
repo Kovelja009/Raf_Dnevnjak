@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Raf Dnevnjak</string>
+    <string name="username">korisnicko ime</string>
+    <string name="email_missing">nedostaje email</string>
+    <string name="username_missing">korisnicko ime nedostaje</string>
+    <string name="password">sifra</string>
+    <string name="password_missing">sifra nedostaje</string>
+    <string name="Login">prijava</string>
+    <string name="calendar">kalendar</string>
+    <string name="tasks">obaveze</string>
+    <string name="user">korisnik</string>
+    <string name="change_password">promeni sifru</string>
+    <string name="logout">odjavi se</string>
+    <string name="new_password">nova sifra</string>
+    <string name="missing_password">nedostaje sifra</string>
+    <string name="confirm_change">potvrdi izmene</string>
+    <string name="cancel">nazad</string>
+    <string name="repeat_password">ponovi sifru</string>
+    <string name="mon">Pon</string>
+    <string name="tue">Uto</string>
+    <string name="wed">Sre</string>
+    <string name="show_past_tasks">Prethodne obaveze</string>
+    <string name="low">nizak</string>
+    <string name="edit">izmeni</string>
+    <string name="delete">obrisi</string>
+    <string name="create">napravi</string>
+    <string name="thu">Cet</string>
+    <string name="fri">Pet</string>
+    <string name="sat">Sub</string>
+    <string name="sun">Ned</string>
+    <string name="medium">srednji</string>
+    <string name="high">visok</string>
+    <string name="start_time">Pocetak</string>
+    <string name="end_time">Kraj</string>
+    <string name="title">Naslov</string>
+    <string name="description">Opis</string>
+    <string name="search_obligations">Pretrazi obaveze</string>
+</resources>

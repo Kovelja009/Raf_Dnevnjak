@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_width="50dp"
 
-            android:text="Thu"
+            android:text="@string/thu"
             />
 
         <TextView
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_width="50dp"
 
-            android:text="Fri"
+            android:text="@string/fri"
             />
 
         <TextView
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_width="50dp"
 
-            android:text="Sat"
+            android:text="@string/sat"
             />
 
         <TextView
@@ -87,7 +87,7 @@
             style="@style/DayDisplay"
             android:layout_height="wrap_content"
             android:layout_width="50dp"
-            android:text="Sun"
+            android:text="@string/sun"
             />
     </LinearLayout>
 

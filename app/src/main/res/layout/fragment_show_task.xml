@@ -79,7 +79,7 @@
         android:layout_height="450dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Description"
+        android:text="@String/Description"
         android:gravity="top"
         android:background="@drawable/search_bar"
         android:drawablePadding="10dp"

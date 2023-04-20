@@ -21,6 +21,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -118,8 +119,6 @@ public class TasksFragment extends Fragment {
 
     private void initRecycler(View view){
         taskAdapter = new TaskAdapter(new TaskDiffItemCallback(), task ->{
-            Toast.makeText(view.getContext(), task.getTitle(), Toast.LENGTH_SHORT).show();
-
             String date = recyclerViewModel.getSelectedDay().getValue().getParsableDate();
             Intent intent = new Intent(getActivity(), ShowActivity.class);
             intent.putExtra(BottomNavigationActivity.DATE_STRING, Task.convertDateTimeToPresentString(task.getEndTime()));
@@ -139,6 +138,32 @@ public class TasksFragment extends Fragment {
         // context od activity-a
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(taskAdapter);
+
+        ItemTouchHelper.SimpleCallback simpleCallback =
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                          RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        //do things
+                        Toast.makeText(getActivity(), String.valueOf(viewHolder.getBindingAdapterPosition()), Toast.LENGTH_SHORT).show();
+                        int pos = viewHolder.getBindingAdapterPosition();
+                        List<Task> updated = recyclerViewModel.getTasks().getValue();
+                        Day day = recyclerViewModel.getSelectedDay().getValue();
+                        Task deleted = updated.remove(pos);
+                        dbHelper.deleteTaskFromDB(username, Task.convertTimeToDBFromat(deleted.getStartTime()));
+                        recyclerViewModel.getTasks().setValue(updated);
+                        day.setTasks(updated);
+                        recyclerViewModel.getSelectedDay().setValue(day);
+                    }
+                };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     private void initListeners(){

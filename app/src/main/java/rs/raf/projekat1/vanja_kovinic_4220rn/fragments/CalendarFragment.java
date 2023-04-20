@@ -78,7 +78,6 @@ public class CalendarFragment extends Fragment {
 
     private void initRecycler(View view) {
         calendarAdapter = new CalendarAdapter(new DayDiffItemCallback(), day -> {
-            Toast.makeText(view.getContext(), day.toString(), Toast.LENGTH_SHORT).show();
             recyclerViewModel.getSelectedDay().setValue(day);
             recyclerViewModel.getTasks().setValue(day.getTasks());
             ((BottomNavigationActivity)getActivity()).getViewPager().setCurrentItem(PagerAdapter.FRAGMENT_2, false);
